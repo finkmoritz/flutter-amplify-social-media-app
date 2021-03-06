@@ -1,0 +1,55 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "authcognitoa31803d7UserPoolId": {
+            "Type": "String",
+            "Default": "authcognitoa31803d7UserPoolId"
+        },
+        
+        "authcognitoa31803d7AppClientID": {
+            "Type": "String",
+            "Default": "authcognitoa31803d7AppClientID"
+        },
+        "authcognitoa31803d7AppClientIDWeb": {
+            "Type": "String",
+            "Default": "authcognitoa31803d7AppClientIDWeb"
+        },
+        "AuthRoleArn": {
+            "Type": "String"
+        },
+        "UnauthRoleArn": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "ShouldNotCreateEnvResources": {
+            "Fn::Equals": [
+                {
+                    "Ref": "env"
+                },
+                "NONE"
+            ]
+        }
+    },
+    "Resources": {
+    
+        "socialmediauserpoolgroupGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "socialmediauserpoolgroup",
+              "Precedence" : 1,
+              
+              "UserPoolId" : {
+                "Ref": "authcognitoa31803d7UserPoolId"
+              }
+            }
+        },
+        
+    
+    
+    },
+    
+}

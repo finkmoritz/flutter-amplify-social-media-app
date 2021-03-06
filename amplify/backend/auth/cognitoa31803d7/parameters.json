@@ -1,7 +1,34 @@
 {
-    "identityPoolName": "socialmediaapp_identitypool_27dd23d1",
-    "allowUnauthenticatedIdentities": true,
-    "authSelections": "identityPoolOnly",
+    "resourceNameTruncated": "cognitd3fb8114",
+    "userPoolName": "socialmediauserpool",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "userpoolClientLambdaRole": "cognitd3fb8114_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "authSelections": "userPoolOnly",
     "resourceName": "cognitoa31803d7",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -14,5 +41,20 @@
             "UnauthRole",
             "Arn"
         ]
-    }
+    },
+    "useDefault": "manual",
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "userPoolGroupList": [
+        "socialmediauserpoolgroup"
+    ],
+    "serviceName": "Cognito",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "dependsOn": [],
+    "authProviders": []
 }
