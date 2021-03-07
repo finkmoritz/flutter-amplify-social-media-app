@@ -2,7 +2,8 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 
 class AuthService {
-  static Future<SignInResult> signIn({String username, String password}) {
+  static Future<SignInResult> signIn({String username, String password}) async {
+    await Amplify.Auth.signOut();
     return Amplify.Auth.signIn(username: username, password: password);
   }
 

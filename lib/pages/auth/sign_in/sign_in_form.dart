@@ -4,6 +4,12 @@ import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
 
 class SignInForm extends StatefulWidget {
+  final initialUsername;
+  final initialPassword;
+
+  const SignInForm({Key key, this.initialUsername, this.initialPassword})
+      : super(key: key);
+
   @override
   _SignInFormState createState() => _SignInFormState();
 }
@@ -14,7 +20,14 @@ class _SignInFormState extends State<SignInForm> {
   final _passwordController = TextEditingController();
 
   @override
-  void dispose() {
+  initState() {
+    _usernameController.text = widget.initialUsername;
+    _passwordController.text = widget.initialPassword;
+    super.initState();
+  }
+
+  @override
+  dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -29,7 +42,6 @@ class _SignInFormState extends State<SignInForm> {
         children: [
           TextFormField(
             controller: _usernameController,
-            obscureText: true,
             validator: (value) {
               if (value.length < 5) {
                 return 'Username too short';
@@ -61,7 +73,6 @@ class _SignInFormState extends State<SignInForm> {
               TextButton(
                 child: Text(
                   'Reset Password',
-                  style: TextStyle(color: Colors.blueGrey),
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/resetPassword');
