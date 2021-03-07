@@ -58,6 +58,15 @@ class _SignInFormState extends State<SignInForm> {
                   Navigator.pushNamed(context, '/signup');
                 },
               ),
+              TextButton(
+                child: Text(
+                  'Reset Password',
+                  style: TextStyle(color: Colors.blueGrey),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/resetPassword');
+                },
+              ),
               ElevatedButton(
                 child: Text('Sign In'),
                 onPressed: () async {

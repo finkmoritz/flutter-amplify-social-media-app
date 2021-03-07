@@ -25,4 +25,22 @@ class AuthService {
       {String username}) {
     return Amplify.Auth.resendSignUpCode(username: username);
   }
+
+  static Future<ResetPasswordResult> resetPassword({String username}) {
+    return Amplify.Auth.resetPassword(username: username);
+  }
+
+  static Future<UpdatePasswordResult> confirmPasswordReset(
+      {String username, String newPassword, String confirmationCode}) {
+    return Amplify.Auth.confirmPassword(
+        username: username,
+        newPassword: newPassword,
+        confirmationCode: confirmationCode);
+  }
+
+  static Future<UpdatePasswordResult> changePassword(
+      {String oldPassword, String newPassword}) {
+    return Amplify.Auth.updatePassword(
+        oldPassword: oldPassword, newPassword: newPassword);
+  }
 }

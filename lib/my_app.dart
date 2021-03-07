@@ -1,6 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/pages/auth/password_reset/password_reset_page.dart';
 import 'package:social_media_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:social_media_app/pages/auth/sign_up/sign_up_page.dart';
 import 'package:social_media_app/pages/home/home_page.dart';
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
         '/': (context) => SignInPage(),
         '/signup': (context) => SignUpPage(),
+        '/resetPassword': (context) => PasswordResetPage(),
         '/home': (context) => HomePage(),
       },
     );
