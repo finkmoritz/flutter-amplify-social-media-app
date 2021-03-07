@@ -5,6 +5,7 @@ import 'package:social_media_app/pages/auth/password_reset/password_reset_page.d
 import 'package:social_media_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:social_media_app/pages/auth/sign_up/sign_up_page.dart';
 import 'package:social_media_app/pages/home/home_page.dart';
+import 'package:social_media_app/pages/home/settings/settings_page.dart';
 
 import 'amplifyconfiguration.dart';
 
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         '/signup': (context) => SignUpPage(),
         '/resetPassword': (context) => PasswordResetPage(),
         '/home': (context) => HomePage(),
+        '/settings': (context) => SettingsPage(),
       },
     );
   }

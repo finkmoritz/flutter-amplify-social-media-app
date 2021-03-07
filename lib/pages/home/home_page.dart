@@ -25,7 +25,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Image(
+            image: AssetImage('assets/icon.png'),
+          ),
+        ),
         title: Text('Social Media App'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
         automaticallyImplyLeading: false,
       ),
       body: PageView(
@@ -36,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Container(child: Center(child: Text('Feed'))),
           Container(child: Center(child: Text('Friends'))),
-          Container(child: Center(child: Text('Settings'))),
+          Container(child: Center(child: Text('My Profile'))),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -56,8 +70,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Friends',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.portrait),
+            label: 'My Profile',
           ),
         ],
       ),
