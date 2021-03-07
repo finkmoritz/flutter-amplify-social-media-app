@@ -3,6 +3,8 @@ import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/pages/home/home_page.dart';
 import 'package:social_media_app/pages/login/login_page.dart';
+import 'package:social_media_app/pages/login/sign_in_form.dart';
+import 'package:social_media_app/pages/login/sign_up_form.dart';
 
 import 'amplifyconfiguration.dart';
 
@@ -46,7 +48,14 @@ class _MyAppState extends State<MyApp> {
         ),
         initialRoute: widget.initialRoute,
         routes: {
-          '/': (context) => LoginPage(),
+          '/': (context) => LoginPage(
+              title: 'Sign In',
+              formWidget: SignInForm()
+          ),
+          '/signup': (context) => LoginPage(
+              title: 'Sign Up',
+              formWidget: SignUpForm()
+          ),
           '/home': (context) => HomePage(),
         },
     );
