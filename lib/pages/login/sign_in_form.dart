@@ -7,6 +7,15 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +25,7 @@ class _SignInFormState extends State<SignInForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
+              controller: usernameController,
               obscureText: true,
               validator: (value) {
                 if(value.length < 5) {
@@ -28,6 +38,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
             ),
             TextFormField(
+              controller: passwordController,
               obscureText: true,
               validator: (value) {
                 if(value.length < 5) {
@@ -52,6 +63,8 @@ class _SignInFormState extends State<SignInForm> {
                   child: Text('Sign In'),
                   onPressed: () {
                     if(_formKey.currentState.validate()) {
+                      print('Username: ${usernameController.text}');
+                      print('Password: ${passwordController.text}');
                       Navigator.pushNamed(context, '/home');
                     }
                   },
