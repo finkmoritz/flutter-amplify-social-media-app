@@ -46,83 +46,85 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(
         title: Text('Sign Up'),
       ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Stepper(
-          currentStep: _stepIndex,
-          onStepCancel: () {
-            if (_stepIndex > 0) {
-              setState(() {
-                _stepIndex--;
-              });
-            }
-          },
-          onStepContinue: () {
-            if (_stepIndex < 1) {
-              setState(() {
-                _stepIndex++;
-              });
-            }
-          },
-          onStepTapped: (index) {
-            if (_stepIndex != index) {
-              setState(() {
-                _stepIndex = index;
-              });
-            }
-          },
-          steps: [
-            Step(
-              title: Text('Sign Up'),
-              content: _buildSignUpForm(),
-              isActive: _stepIndex == 0,
-              state: _stepIndex > 0 ? StepState.complete : StepState.indexed,
-            ),
-            Step(
-              title: Text('Confirm'),
-              content: _buildConfirmationForm(),
-              isActive: _stepIndex == 1,
-            ),
-          ],
-          controlsBuilder: (BuildContext context,
-              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            switch (_stepIndex) {
-              case 0:
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: onStepContinue,
-                      child: const Text('Skip'),
-                    ),
-                    ElevatedButton(
-                      onPressed: _signUp,
-                      child: const Text('Sign Up'),
-                    ),
-                  ],
-                );
-              case 1:
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: onStepCancel,
-                      child: const Text('Back'),
-                    ),
-                    TextButton(
-                      onPressed: _resend,
-                      child: const Text('Resend Code'),
-                    ),
-                    ElevatedButton(
-                      onPressed: _confirm,
-                      child: const Text('Confirm'),
-                    ),
-                  ],
-                );
-              default:
-                throw Exception('Index out of bounds: $_stepIndex');
-            }
-          },
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 400, maxHeight: 700),
+          child: Stepper(
+            currentStep: _stepIndex,
+            onStepCancel: () {
+              if (_stepIndex > 0) {
+                setState(() {
+                  _stepIndex--;
+                });
+              }
+            },
+            onStepContinue: () {
+              if (_stepIndex < 1) {
+                setState(() {
+                  _stepIndex++;
+                });
+              }
+            },
+            onStepTapped: (index) {
+              if (_stepIndex != index) {
+                setState(() {
+                  _stepIndex = index;
+                });
+              }
+            },
+            steps: [
+              Step(
+                title: Text('Sign Up'),
+                content: _buildSignUpForm(),
+                isActive: _stepIndex == 0,
+                state: _stepIndex > 0 ? StepState.complete : StepState.indexed,
+              ),
+              Step(
+                title: Text('Confirm'),
+                content: _buildConfirmationForm(),
+                isActive: _stepIndex == 1,
+              ),
+            ],
+            controlsBuilder: (BuildContext context,
+                {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+              switch (_stepIndex) {
+                case 0:
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: onStepContinue,
+                        child: const Text('Skip'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _signUp,
+                        child: const Text('Sign Up'),
+                      ),
+                    ],
+                  );
+                case 1:
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: onStepCancel,
+                        child: const Text('Back'),
+                      ),
+                      TextButton(
+                        onPressed: _resend,
+                        child: const Text('Resend Code'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _confirm,
+                        child: const Text('Confirm'),
+                      ),
+                    ],
+                  );
+                default:
+                  throw Exception('Index out of bounds: $_stepIndex');
+              }
+            },
+          ),
         ),
       ),
     );

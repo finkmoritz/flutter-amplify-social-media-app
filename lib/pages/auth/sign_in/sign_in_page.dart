@@ -31,17 +31,20 @@ class SignInPage extends StatelessWidget {
 
   Widget _buildContent({String username, String password}) {
     return Center(
-      child: Padding(
-        padding: EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image(image: AssetImage('assets/icon.png')),
-            SignInForm(
-              initialUsername: username,
-              initialPassword: password,
-            ),
-          ],
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 400, maxHeight: 700),
+        child: Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image(image: AssetImage('assets/icon.png')),
+              SignInForm(
+                initialUsername: username,
+                initialPassword: password,
+              ),
+            ],
+          ),
         ),
       ),
     );
