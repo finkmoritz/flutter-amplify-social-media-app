@@ -7,6 +7,10 @@ class AuthService {
     return Amplify.Auth.signIn(username: username, password: password);
   }
 
+  static Future<SignOutResult> signOut() async {
+    return Amplify.Auth.signOut();
+  }
+
   static Future<SignUpResult> signUp(
       {String email, String username, String password}) {
     Map<String, String> userAttributes = {'email': email};

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/pages/home/settings/settings_list_view.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -7,7 +8,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Container(),
+      body: SettingsListView(),
     );
   }
 }
