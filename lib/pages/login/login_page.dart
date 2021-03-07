@@ -18,6 +18,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Image(image: AssetImage('assets/icon.png')),
               formWidget,
             ],
           ),
