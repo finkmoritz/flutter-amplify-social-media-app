@@ -40,12 +40,15 @@ PODS:
     - AWSCore (~> 2.23.0)
   - Flutter (1.0.0)
   - ObjectMapper (4.2.0)
+  - shared_preferences (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - amplify_auth_cognito (from `.symlinks/plugins/amplify_auth_cognito/ios`)
   - amplify_core (from `.symlinks/plugins/amplify_core/ios`)
   - amplify_flutter (from `.symlinks/plugins/amplify_flutter/ios`)
   - Flutter (from `Flutter`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 SPEC REPOS:
   trunk:
@@ -68,6 +71,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplify_flutter/ios"
   Flutter:
     :path: Flutter
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
   Amplify: 4d0c3b0871e1f268c81ce5e9b65532df0a013900
@@ -83,6 +88,7 @@ SPEC CHECKSUMS:
   AWSPluginsCore: f41f8a478fe3fd8839ec16278b86dededefb0628
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
