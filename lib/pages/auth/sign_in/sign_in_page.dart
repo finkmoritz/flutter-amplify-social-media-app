@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/pages/login/sign_in/sign_in_form.dart';
+import 'package:social_media_app/pages/auth/sign_in/sign_in_form.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -7,6 +7,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Padding(

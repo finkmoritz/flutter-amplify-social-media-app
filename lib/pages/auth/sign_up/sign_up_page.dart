@@ -1,6 +1,6 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_app/services/login_service.dart';
+import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -100,6 +100,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       onPressed: onStepCancel,
                       child: const Text('Back'),
                     ),
+                    TextButton(
+                      onPressed: _resend,
+                      child: const Text('Resend Code'),
+                    ),
                     ElevatedButton(
                       onPressed: _confirm,
                       child: const Text('Confirm'),
@@ -145,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _passwordController,
             obscureText: true,
             validator: (value) {
-              if (value.length < 6) {
+              if (value.length < 8) {
                 return 'Password too short';
               }
               return null;
@@ -193,7 +197,7 @@ class _SignUpPageState extends State<SignUpPage> {
   _signUp() async {
     if (_signUpFormKey.currentState.validate()) {
       try {
-        await LoginService.signUp(
+        await AuthService.signUp(
           email: _emailController.text.trim(),
           username: _usernameController.text.trim(),
           password: _passwordController.text.trim(),
@@ -209,10 +213,26 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  _resend() async {
+    if (_confirmationFormKey.currentState.validate()) {
+      try {
+        await AuthService.resendConfirmationCode(
+          username: _usernameController.text.trim(),
+        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Sent confirmation code')));
+      } on AuthException catch (e) {
+        print(e.message);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message)));
+      }
+    }
+  }
+
   _confirm() async {
     if (_confirmationFormKey.currentState.validate()) {
       try {
-        var result = await LoginService.confirmSignUp(
+        var result = await AuthService.confirmSignUp(
           username: _usernameController.text.trim(),
           confirmationCode: _confirmationCodeController.text.trim(),
         );

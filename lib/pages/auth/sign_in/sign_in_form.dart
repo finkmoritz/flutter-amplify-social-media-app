@@ -1,6 +1,6 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_app/services/login_service.dart';
+import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
 
 class SignInForm extends StatefulWidget {
@@ -42,7 +42,7 @@ class _SignInFormState extends State<SignInForm> {
             controller: _passwordController,
             obscureText: true,
             validator: (value) {
-              if (value.length < 6) {
+              if (value.length < 8) {
                 return 'Password too short';
               }
               return null;
@@ -65,7 +65,7 @@ class _SignInFormState extends State<SignInForm> {
                     try {
                       var username = _usernameController.text.trim();
                       var password = _passwordController.text.trim();
-                      var result = await LoginService.signIn(
+                      var result = await AuthService.signIn(
                         username: username,
                         password: password,
                       );
