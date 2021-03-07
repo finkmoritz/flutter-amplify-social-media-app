@@ -1,5 +1,6 @@
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/pages/auth/password_reset/password_reset_page.dart';
@@ -9,6 +10,7 @@ import 'package:social_media_app/pages/home/home_page.dart';
 import 'package:social_media_app/pages/home/settings/settings_page.dart';
 
 import 'amplifyconfiguration.dart';
+import 'models/ModelProvider.dart';
 
 class MyApp extends StatefulWidget {
   final String initialRoute;
@@ -30,7 +32,11 @@ class _MyAppState extends State<MyApp> {
   void _configureAmplify() async {
     if (!mounted) return;
 
-    Amplify.addPlugins([AmplifyAuthCognito(), AmplifyAnalyticsPinpoint()]);
+    Amplify.addPlugins([
+      AmplifyAuthCognito(),
+      AmplifyAnalyticsPinpoint(),
+      AmplifyDataStore(modelProvider: ModelProvider.instance)
+    ]);
 
     // Note: Amplify can only be configured once.
     try {
