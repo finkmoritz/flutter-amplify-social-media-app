@@ -1,3 +1,4 @@
+import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
@@ -29,25 +30,26 @@ class _MyAppState extends State<MyApp> {
   void _configureAmplify() async {
     if (!mounted) return;
 
-    Amplify.addPlugin(AmplifyAuthCognito());
+    Amplify.addPlugins([AmplifyAuthCognito(), AmplifyAnalyticsPinpoint()]);
 
     // Note: Amplify can only be configured once.
     try {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
-      print("Amplify was already configured. Was the app restarted?");
+      print(
+          "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Amplify Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: widget.initialRoute,
-        routes: {
+      title: 'Flutter Amplify Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: widget.initialRoute,
+      routes: {
         '/': (context) => SignInPage(),
         '/signup': (context) => SignUpPage(),
         '/resetPassword': (context) => PasswordResetPage(),

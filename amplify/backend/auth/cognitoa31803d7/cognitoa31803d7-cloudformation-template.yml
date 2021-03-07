@@ -8,18 +8,26 @@ Parameters:
   unauthRoleArn:
     Type: String
 
-  
 
-    
+
+
+  identityPoolName:
+    Type: String
+
+
+
+  allowUnauthenticatedIdentities:
+    Type: String
+
   resourceNameTruncated:
     Type: String
-  
-            
+
+
   userPoolName:
     Type: String
-  
-            
-        
+
+
+
   autoVerifiedAttributes:
     Type: CommaDelimitedList
       
@@ -121,7 +129,6 @@ Parameters:
   userPoolGroupList:
     Type: CommaDelimitedList
       
-            
   serviceName:
     Type: String
   
@@ -356,22 +363,64 @@ Resources:
       clientId: !Ref UserPoolClient
       userpoolId: !Ref UserPool
     DependsOn: UserPoolClientLogPolicy
-  
 
-  
-  
 
-  
-    
+
+
+
+
+
+  # BEGIN IDENTITY POOL RESOURCES
+
+
+  IdentityPool:
+    # Always created
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: !If [ ShouldNotCreateEnvResources, 'cognitoa31803d7_identitypool_a8a57b81', !Join [ '',[ 'cognitoa31803d7_identitypool_a8a57b81', '__', !Ref env ] ] ]
+
+      CognitoIdentityProviders:
+        - ClientId: !Ref UserPoolClient
+          ProviderName: !Sub
+            - cognito-idp.${region}.amazonaws.com/${client}
+            - { region: !Ref "AWS::Region",  client: !Ref UserPool }
+        - ClientId: !Ref UserPoolClientWeb
+          ProviderName: !Sub
+            - cognito-idp.${region}.amazonaws.com/${client}
+            - { region: !Ref "AWS::Region",  client: !Ref UserPool }
+
+      AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
+
+
+    DependsOn: UserPoolClientInputs
+
+
+  IdentityPoolRoleMap:
+    # Created to map Auth and Unauth roles to the identity pool
+    # Depends on Identity Pool for ID ref
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        unauthenticated: !Ref unauthRoleArn
+        authenticated: !Ref authRoleArn
+    DependsOn: IdentityPool
+
 
 Outputs :
-  
-  
-  
-  
+
+  IdentityPoolId:
+    Value: !Ref 'IdentityPool'
+    Description: Id for the identity pool
+  IdentityPoolName:
+    Value: !GetAtt IdentityPool.Name
+
+
+
+
   UserPoolId:
     Value: !Ref 'UserPool'
-    Description:  Id for the user pool
+    Description: Id for the user pool
   UserPoolName:
     Value: !Ref userPoolName
   AppClientIDWeb:

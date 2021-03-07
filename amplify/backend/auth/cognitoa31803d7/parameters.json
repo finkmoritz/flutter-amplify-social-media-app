@@ -1,14 +1,16 @@
 {
-    "resourceNameTruncated": "cognitd3fb8114",
-    "userPoolName": "socialmediauserpool",
-    "autoVerifiedAttributes": [
-        "email"
-    ],
-    "mfaConfiguration": "OFF",
-    "mfaTypes": [
-        "SMS Text Message"
-    ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
+  "identityPoolName": "cognitoa31803d7_identitypool_a8a57b81",
+  "allowUnauthenticatedIdentities": true,
+  "resourceNameTruncated": "cognitd3fb8114",
+  "userPoolName": "socialmediauserpool",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaConfiguration": "OFF",
+  "mfaTypes": [
+    "SMS Text Message"
+  ],
+  "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
@@ -18,27 +20,27 @@
     "requiredAttributes": [
         "email"
     ],
-    "userpoolClientGenerateSecret": false,
-    "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": [
-        "email"
-    ],
-    "userpoolClientReadAttributes": [
-        "email"
-    ],
-    "userpoolClientLambdaRole": "cognitd3fb8114_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
-    "authSelections": "userPoolOnly",
-    "resourceName": "cognitoa31803d7",
-    "authRoleArn": {
-        "Fn::GetAtt": [
-            "AuthRole",
-            "Arn"
-        ]
-    },
-    "unauthRoleArn": {
-        "Fn::GetAtt": [
-            "UnauthRole",
+  "userpoolClientGenerateSecret": false,
+  "userpoolClientRefreshTokenValidity": 30,
+  "userpoolClientWriteAttributes": [
+    "email"
+  ],
+  "userpoolClientReadAttributes": [
+    "email"
+  ],
+  "userpoolClientLambdaRole": "cognitd3fb8114_userpoolclient_lambda_role",
+  "userpoolClientSetAttributes": false,
+  "authSelections": "identityPoolAndUserPool",
+  "resourceName": "cognitoa31803d7",
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  },
+  "unauthRoleArn": {
+    "Fn::GetAtt": [
+      "UnauthRole",
             "Arn"
         ]
     },

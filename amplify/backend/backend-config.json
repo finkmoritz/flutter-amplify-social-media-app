@@ -16,11 +16,17 @@
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
-            "AppClientID"
+            "AppClientID",
+            "IdentityPoolId"
           ]
         }
       ]
     }
   },
-  "analytics": {}
+  "analytics": {
+    "socialmediaapp": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
+  }
 }
