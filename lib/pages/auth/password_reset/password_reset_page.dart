@@ -12,11 +12,19 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
   final _resetFormKey = GlobalKey<FormState>();
   final _confirmationFormKey = GlobalKey<FormState>();
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmationCodeController = TextEditingController();
+  TextEditingController _usernameController;
+  TextEditingController _passwordController;
+  TextEditingController _confirmationCodeController;
 
   int _stepIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmationCodeController = TextEditingController();
+  }
 
   @override
   void dispose() {

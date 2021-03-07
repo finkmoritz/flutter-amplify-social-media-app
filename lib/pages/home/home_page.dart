@@ -7,6 +7,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +28,11 @@ class _HomePageState extends State<HomePage> {
         title: Text('Social Media App'),
         automaticallyImplyLeading: false,
       ),
-      body: IndexedStack(
-        index: _currentIndex,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) => setState(() {
+          _currentIndex = index;
+        }),
         children: [
           Container(child: Center(child: Text('Feed'))),
           Container(child: Center(child: Text('Friends'))),
@@ -24,8 +40,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
         onTap: (index) => setState(() {
           _currentIndex = index;
+          _pageController.animateToPage(index,
+              duration: Duration(milliseconds: 500), curve: Curves.easeOut);
         }),
         items: [
           BottomNavigationBarItem(

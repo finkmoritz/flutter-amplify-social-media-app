@@ -16,14 +16,14 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   initState() {
-    _usernameController.text = widget.initialUsername;
-    _passwordController.text = widget.initialPassword;
     super.initState();
+    _usernameController = TextEditingController(text: widget.initialUsername);
+    _passwordController = TextEditingController(text: widget.initialPassword);
   }
 
   @override

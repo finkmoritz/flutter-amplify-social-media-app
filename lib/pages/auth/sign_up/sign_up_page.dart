@@ -12,15 +12,24 @@ class _SignUpPageState extends State<SignUpPage> {
   final _signUpFormKey = GlobalKey<FormState>();
   final _confirmationFormKey = GlobalKey<FormState>();
 
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmationCodeController = TextEditingController();
-
   final _emailRegEx = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
+  TextEditingController _usernameController;
+  TextEditingController _emailController;
+  TextEditingController _passwordController;
+  TextEditingController _confirmationCodeController;
+
   int _stepIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmationCodeController = TextEditingController();
+  }
 
   @override
   void dispose() {
