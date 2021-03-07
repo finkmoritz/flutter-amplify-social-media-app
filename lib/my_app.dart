@@ -2,14 +2,12 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/pages/home/home_page.dart';
-import 'package:social_media_app/pages/login/login_page.dart';
-import 'package:social_media_app/pages/login/sign_in_form.dart';
-import 'package:social_media_app/pages/login/sign_up_form.dart';
+import 'package:social_media_app/pages/login/sign_in/sign_in_page.dart';
+import 'package:social_media_app/pages/login/sign_up/sign_up_page.dart';
 
 import 'amplifyconfiguration.dart';
 
 class MyApp extends StatefulWidget {
-
   final String initialRoute;
 
   MyApp({Key key, this.initialRoute}) : super(key: key);
@@ -48,16 +46,10 @@ class _MyAppState extends State<MyApp> {
         ),
         initialRoute: widget.initialRoute,
         routes: {
-          '/': (context) => LoginPage(
-              title: 'Sign In',
-              formWidget: SignInForm()
-          ),
-          '/signup': (context) => LoginPage(
-              title: 'Sign Up',
-              formWidget: SignUpForm()
-          ),
-          '/home': (context) => HomePage(),
-        },
+        '/': (context) => SignInPage(),
+        '/signup': (context) => SignUpPage(),
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }

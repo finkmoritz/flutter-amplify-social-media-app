@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/pages/login/sign_in/sign_in_form.dart';
 
-class LoginPage extends StatelessWidget {
-  final String title;
-  final Widget formWidget;
-
-  LoginPage({this.title, this.formWidget, Key key}) : super(key: key);
-
+class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text('Sign In'),
       ),
       body: Center(
         child: Padding(
@@ -19,7 +15,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image(image: AssetImage('assets/icon.png')),
-              formWidget,
+              SignInForm(),
             ],
           ),
         ),
