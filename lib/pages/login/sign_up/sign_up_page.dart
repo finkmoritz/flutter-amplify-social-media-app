@@ -145,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _passwordController,
             obscureText: true,
             validator: (value) {
-              if (value.length < 5) {
+              if (value.length < 6) {
                 return 'Password too short';
               }
               return null;
@@ -193,17 +193,16 @@ class _SignUpPageState extends State<SignUpPage> {
   _signUp() async {
     if (_signUpFormKey.currentState.validate()) {
       try {
-        var result = await LoginService.signUp(
+        await LoginService.signUp(
           email: _emailController.text.trim(),
           username: _usernameController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        if (result.isSignUpComplete) {
-          setState(() {
-            _stepIndex = 1;
-          });
-        }
+        setState(() {
+          _stepIndex = 1;
+        });
       } on AuthException catch (e) {
+        print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
       }
@@ -225,6 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
           Navigator.pushNamed(context, '/');
         }
       } on AuthException catch (e) {
+        print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
       }

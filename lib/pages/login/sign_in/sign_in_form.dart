@@ -42,7 +42,7 @@ class _SignInFormState extends State<SignInForm> {
             controller: _passwordController,
             obscureText: true,
             validator: (value) {
-              if (value.length < 5) {
+              if (value.length < 6) {
                 return 'Password too short';
               }
               return null;
@@ -63,18 +63,19 @@ class _SignInFormState extends State<SignInForm> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     try {
+                      var username = _usernameController.text.trim();
+                      var password = _passwordController.text.trim();
                       var result = await LoginService.signIn(
-                        username: _usernameController.text.trim(),
-                        password: _passwordController.text.trim(),
+                        username: username,
+                        password: password,
                       );
                       if (result.isSignedIn) {
-                        SharedPreferencesService.setUsername(
-                            _usernameController.text.trim());
-                        SharedPreferencesService.setPassword(
-                            _passwordController.text.trim());
+                        SharedPreferencesService.setUsername(username);
+                        SharedPreferencesService.setPassword(password);
                         Navigator.pushNamed(context, '/home');
                       }
                     } on AuthException catch (e) {
+                      print(e.message);
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.message)));
                     }
