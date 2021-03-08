@@ -2,6 +2,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/button/my_elevated_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
+import 'package:social_media_app/components/form/my_text_form_field.dart';
 import 'package:social_media_app/services/auth_service.dart';
 
 class PasswordChangePage extends StatefulWidget {
@@ -108,7 +109,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
+          MyTextFormField(
             controller: _oldPasswordController,
             obscureText: true,
             validator: (value) {
@@ -119,7 +120,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
             },
             decoration: InputDecoration(hintText: 'Enter your old password'),
           ),
-          TextFormField(
+          MyTextFormField(
             controller: _newPasswordController,
             obscureText: true,
             validator: (value) {

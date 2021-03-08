@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/components/button/my_elevated_button.dart';
 import 'package:social_media_app/components/button/my_text_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
+import 'package:social_media_app/components/form/my_text_form_field.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
 
@@ -51,7 +52,7 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
+          MyTextFormField(
             controller: _usernameController,
             validator: (value) {
               if (value.length < 5) {
@@ -61,7 +62,7 @@ class _SignInFormState extends State<SignInForm> {
             },
             decoration: InputDecoration(hintText: 'Enter your username'),
           ),
-          TextFormField(
+          MyTextFormField(
             controller: _passwordController,
             obscureText: true,
             validator: (value) {

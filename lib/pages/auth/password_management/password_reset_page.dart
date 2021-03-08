@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/components/button/my_elevated_button.dart';
 import 'package:social_media_app/components/button/my_text_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
+import 'package:social_media_app/components/form/my_text_form_field.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
 
@@ -141,7 +142,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
+          MyTextFormField(
             controller: _usernameController,
             validator: (value) {
               if (value.isEmpty) {
@@ -164,7 +165,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
         children: [
           Text(
               'We sent you an email with your confirmation code. Please check your inbox.'),
-          TextFormField(
+          MyTextFormField(
             controller: _usernameController,
             validator: (value) {
               if (value.length < 5) {
@@ -174,7 +175,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             },
             decoration: InputDecoration(hintText: 'Enter your username'),
           ),
-          TextFormField(
+          MyTextFormField(
             controller: _passwordController,
             obscureText: true,
             validator: (value) {
@@ -185,7 +186,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             },
             decoration: InputDecoration(hintText: 'Enter your new password'),
           ),
-          TextFormField(
+          MyTextFormField(
             controller: _confirmationCodeController,
             validator: (value) {
               if (value.isEmpty) {
