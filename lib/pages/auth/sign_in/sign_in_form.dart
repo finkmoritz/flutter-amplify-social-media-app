@@ -2,6 +2,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
+import 'package:social_media_app/util/dialog/loading_dialog.dart';
 
 class SignInForm extends StatefulWidget {
   final initialUsername;
@@ -88,32 +89,42 @@ class _SignInFormState extends State<SignInForm> {
               ),
               ElevatedButton(
                 child: Text('Sign In'),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    try {
-                      var username = _usernameController.text.trim();
-                      var password = _passwordController.text.trim();
-                      var result = await AuthService.signIn(
-                        username: username,
-                        password: password,
-                      );
-                      if (result.isSignedIn) {
-                        SharedPreferencesService.setUsername(username);
-                        SharedPreferencesService.setPassword(password);
-                        Navigator.pushNamed(context, '/home');
-                      }
-                    } on AuthException catch (e) {
-                      print(e.message);
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.message)));
-                    }
-                  }
-                },
+                onPressed: _signIn,
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  _signIn() async {
+    if (_formKey.currentState.validate()) {
+      var username = _usernameController.text.trim();
+      var password = _passwordController.text.trim();
+      SignInResult result;
+      try {
+        LoadingDialog.show(
+          context: context,
+          text: 'Signing in',
+        );
+        result = await AuthService.signIn(
+          username: username,
+          password: password,
+        );
+      } on AuthException catch (e) {
+        print(e.message);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
+      }
+
+      if (result != null && result.isSignedIn) {
+        SharedPreferencesService.setUsername(username);
+        SharedPreferencesService.setPassword(password);
+        Navigator.pushNamed(context, '/home');
+      }
+    }
   }
 }

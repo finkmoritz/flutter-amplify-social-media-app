@@ -2,6 +2,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
+import 'package:social_media_app/util/dialog/loading_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -59,14 +60,14 @@ class _SignUpPageState extends State<SignUpPage> {
               }
             },
             onStepContinue: () {
-              if (_stepIndex < 1) {
+              if (_stepIndex < 2) {
                 setState(() {
                   _stepIndex++;
                 });
               }
             },
             onStepTapped: (index) {
-              if (_stepIndex != index) {
+              if (_stepIndex != index && index < 2) {
                 setState(() {
                   _stepIndex = index;
                 });
@@ -83,6 +84,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 title: Text('Confirm'),
                 content: _buildConfirmationForm(),
                 isActive: _stepIndex == 1,
+                state: _stepIndex > 1 ? StepState.complete : StepState.indexed,
+              ),
+              Step(
+                title: Text('Done'),
+                content: Text('You successfully signed up.'),
+                isActive: _stepIndex == 2,
+                state: _stepIndex == 2 ? StepState.complete : StepState.indexed,
               ),
             ],
             controlsBuilder: (BuildContext context,
@@ -120,6 +128,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ],
                   );
+                case 2:
+                  return ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text('Sign In'),
+                  );
                 default:
                   throw Exception('Index out of bounds: $_stepIndex');
               }
@@ -154,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
               }
               return null;
             },
-            decoration: InputDecoration(hintText: 'Enter your username'),
+            decoration: InputDecoration(hintText: 'Choose your username'),
           ),
           TextFormField(
             controller: _passwordController,
@@ -165,7 +178,7 @@ class _SignUpPageState extends State<SignUpPage> {
               }
               return null;
             },
-            decoration: InputDecoration(hintText: 'Enter your password'),
+            decoration: InputDecoration(hintText: 'Choose your password'),
           ),
         ],
       ),
@@ -198,7 +211,8 @@ class _SignUpPageState extends State<SignUpPage> {
               }
               return null;
             },
-            decoration: InputDecoration(hintText: 'Enter confirmation code'),
+            decoration:
+                InputDecoration(hintText: 'Enter your confirmation code'),
           ),
         ],
       ),
@@ -208,6 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
   _signUp() async {
     if (_signUpFormKey.currentState.validate()) {
       try {
+        LoadingDialog.show(context: context, text: 'Sending confirmation code');
         await AuthService.signUp(
           email: _emailController.text.trim(),
           username: _usernameController.text.trim(),
@@ -220,6 +235,8 @@ class _SignUpPageState extends State<SignUpPage> {
         print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
       }
     }
   }
@@ -227,6 +244,10 @@ class _SignUpPageState extends State<SignUpPage> {
   _resend() async {
     if (_confirmationFormKey.currentState.validate()) {
       try {
+        LoadingDialog.show(
+          context: context,
+          text: 'Sending confirmation code',
+        );
         await AuthService.resendConfirmationCode(
           username: _usernameController.text.trim(),
         );
@@ -236,6 +257,8 @@ class _SignUpPageState extends State<SignUpPage> {
         print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
       }
     }
   }
@@ -243,21 +266,27 @@ class _SignUpPageState extends State<SignUpPage> {
   _confirm() async {
     if (_confirmationFormKey.currentState.validate()) {
       try {
+        LoadingDialog.show(
+          context: context,
+          text: 'Validating confirmation code',
+        );
         var result = await AuthService.confirmSignUp(
           username: _usernameController.text.trim(),
           confirmationCode: _confirmationCodeController.text.trim(),
         );
         if (result.isSignUpComplete) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Successfully signed up!')));
           SharedPreferencesService.setUsername(_usernameController.text.trim());
           SharedPreferencesService.setPassword(_passwordController.text.trim());
-          Navigator.pushNamed(context, '/');
+          setState(() {
+            _stepIndex = 2;
+          });
         }
       } on AuthException catch (e) {
         print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
       }
     }
   }

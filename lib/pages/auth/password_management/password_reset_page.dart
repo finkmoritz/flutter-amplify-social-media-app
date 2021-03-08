@@ -2,6 +2,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
+import 'package:social_media_app/util/dialog/loading_dialog.dart';
 
 class PasswordResetPage extends StatefulWidget {
   @override
@@ -53,14 +54,14 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
               }
             },
             onStepContinue: () {
-              if (_stepIndex < 1) {
+              if (_stepIndex < 2) {
                 setState(() {
                   _stepIndex++;
                 });
               }
             },
             onStepTapped: (index) {
-              if (_stepIndex != index) {
+              if (_stepIndex != index && index < 2) {
                 setState(() {
                   _stepIndex = index;
                 });
@@ -68,8 +69,8 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             },
             steps: [
               Step(
-                title: Text('Reset Password'),
-                content: _buildSignUpForm(),
+                title: Text('Request Password Reset'),
+                content: _buildResetPasswordForm(),
                 isActive: _stepIndex == 0,
                 state: _stepIndex > 0 ? StepState.complete : StepState.indexed,
               ),
@@ -77,6 +78,13 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                 title: Text('Confirm New Password'),
                 content: _buildConfirmationForm(),
                 isActive: _stepIndex == 1,
+                state: _stepIndex > 1 ? StepState.complete : StepState.indexed,
+              ),
+              Step(
+                title: Text('Done'),
+                content: Text('Your password was successfully reset.'),
+                isActive: _stepIndex == 2,
+                state: _stepIndex == 2 ? StepState.complete : StepState.indexed,
               ),
             ],
             controlsBuilder: (BuildContext context,
@@ -91,7 +99,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                         child: const Text('Skip'),
                       ),
                       ElevatedButton(
-                        onPressed: _signUp,
+                        onPressed: _resetPassword,
                         child: const Text('Reset Password'),
                       ),
                     ],
@@ -110,6 +118,11 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                       ),
                     ],
                   );
+                case 2:
+                  return ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text('Sign In'),
+                  );
                 default:
                   throw Exception('Index out of bounds: $_stepIndex');
               }
@@ -120,7 +133,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
     );
   }
 
-  Widget _buildSignUpForm() {
+  Widget _buildResetPasswordForm() {
     return Form(
       key: _resetFormKey,
       child: Column(
@@ -168,7 +181,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
               }
               return null;
             },
-            decoration: InputDecoration(hintText: 'Enter your password'),
+            decoration: InputDecoration(hintText: 'Enter your new password'),
           ),
           TextFormField(
             controller: _confirmationCodeController,
@@ -185,9 +198,13 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
     );
   }
 
-  _signUp() async {
+  _resetPassword() async {
     if (_resetFormKey.currentState.validate()) {
       try {
+        LoadingDialog.show(
+          context: context,
+          text: 'Sending confirmation code',
+        );
         await AuthService.resetPassword(
           username: _usernameController.text.trim(),
         );
@@ -198,6 +215,8 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
         print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
       }
     }
   }
@@ -205,19 +224,25 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
   _confirm() async {
     if (_confirmationFormKey.currentState.validate()) {
       try {
+        LoadingDialog.show(
+          context: context,
+          text: 'Sending new password',
+        );
         await AuthService.confirmPasswordReset(
           username: _usernameController.text.trim(),
           newPassword: _passwordController.text.trim(),
           confirmationCode: _confirmationCodeController.text.trim(),
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Successfully reset password!')));
         SharedPreferencesService.setPassword(_passwordController.text.trim());
-        Navigator.pushNamed(context, '/');
+        setState(() {
+          _stepIndex = 2;
+        });
       } on AuthException catch (e) {
         print(e.message);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message)));
+      } finally {
+        Navigator.pop(context); //close LoadingDialog
       }
     }
   }
