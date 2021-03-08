@@ -1,7 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/dialog/loading_dialog.dart';
 import 'package:social_media_app/services/auth_service.dart';
-import 'package:social_media_app/util/dialog/loading_dialog.dart';
 
 class PasswordChangePage extends StatefulWidget {
   @override
