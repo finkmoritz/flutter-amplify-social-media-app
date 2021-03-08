@@ -1,14 +1,48 @@
 # Serverless social media app with Flutter and AWS Amplify
 
++++ This template is currently under construction and does not contain all the features listed below! +++
+
+This template implements a generic social media app using following cloud capabilities:
+
+- Authentication / authorization
+- Cloud storage with GraphQL schema
+- Analytics
+- Lambda function calls via REST API
+
+The app's features include:
+
+- Profile creation
+- Buddylist management
+- Feed with posts
+- Chat
+
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+In order to use the AWS Amplify service, you need an [AWS account](https://aws.amazon.com/de/console/).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Project Setup
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Install following tools:
+
+- [Flutter](https://flutter.dev/)
+- [Amplify](https://docs.amplify.aws/lib/project-setup/prereq/q/platform/flutter)
+
+Next, configure Amplify with following commands:
+
+`amplify init`
+
+`amplify add analytics`
+
+`amplify add auth`
+
+`amplify add api` (GraphQL)
+
+If everything is configured as desired, execute `amplify push` to create the respective resources in AWS.
+
+### GraphQL
+
+The GraphQL schema is defined in [schema.graphql](amplify/backend/api/socialmediaapp/schema.graphql). Whenever changes
+have been made to that schema, execute `amplify codegen models` in order to generate the respective dart classes within
+the [lib/models](lib/models) folder.
