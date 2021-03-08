@@ -1,5 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/button/my_elevated_button.dart';
+import 'package:social_media_app/components/button/my_text_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
@@ -94,11 +96,11 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(
+                      MyTextButton(
                         onPressed: onStepContinue,
                         child: const Text('Skip'),
                       ),
-                      ElevatedButton(
+                      MyElevatedButton(
                         onPressed: _resetPassword,
                         child: const Text('Reset Password'),
                       ),
@@ -108,18 +110,18 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(
+                      MyTextButton(
                         onPressed: onStepCancel,
                         child: const Text('Back'),
                       ),
-                      ElevatedButton(
+                      MyElevatedButton(
                         onPressed: _confirm,
                         child: const Text('Confirm'),
                       ),
                     ],
                   );
                 case 2:
-                  return ElevatedButton(
+                  return MyElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/'),
                     child: const Text('Sign In'),
                   );

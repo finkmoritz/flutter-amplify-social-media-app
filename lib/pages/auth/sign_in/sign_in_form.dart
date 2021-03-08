@@ -1,5 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/button/my_elevated_button.dart';
+import 'package:social_media_app/components/button/my_text_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/shared_preferences_service.dart';
@@ -73,13 +75,13 @@ class _SignInFormState extends State<SignInForm> {
           ButtonBar(
             alignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton(
+              MyTextButton(
                 child: Text('Sign Up'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/signup');
                 },
               ),
-              TextButton(
+              MyTextButton(
                 child: Text(
                   'Reset Password',
                 ),
@@ -87,7 +89,7 @@ class _SignInFormState extends State<SignInForm> {
                   Navigator.pushNamed(context, '/resetPassword');
                 },
               ),
-              ElevatedButton(
+              MyElevatedButton(
                 child: Text('Sign In'),
                 onPressed: _signIn,
               ),

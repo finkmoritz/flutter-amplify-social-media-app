@@ -1,5 +1,6 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/button/my_elevated_button.dart';
 import 'package:social_media_app/components/dialog/loading_dialog.dart';
 import 'package:social_media_app/services/auth_service.dart';
 
@@ -83,7 +84,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
+                      MyElevatedButton(
                         onPressed: _changePassword,
                         child: const Text('Change Password'),
                       ),
