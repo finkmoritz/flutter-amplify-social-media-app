@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/pages/home/my_profile/my_profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           Container(child: Center(child: Text('Feed'))),
           Container(child: Center(child: Text('Chat'))),
           Container(child: Center(child: Text('Friends'))),
-          Container(child: Center(child: Text('My Profile'))),
+          Container(child: MyProfilePage()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

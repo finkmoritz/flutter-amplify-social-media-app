@@ -1,6 +1,7 @@
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:social_media_app/models/ModelProvider.dart';
 
 import 'analytics_service.dart';
 
@@ -38,6 +39,7 @@ class AuthService {
   static Future<SignUpResult> confirmSignUp({String username, String confirmationCode}) async {
     var result = await Amplify.Auth.confirmSignUp(
         username: username, confirmationCode: confirmationCode);
+    Amplify.DataStore.save(User(name: username));
     AnalyticsService.recordEvent(event: AnalyticsEvent('confirmSignUp'));
     return result;
   }
