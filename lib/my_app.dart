@@ -14,6 +14,10 @@ import 'amplifyconfiguration.dart';
 import 'models/ModelProvider.dart';
 
 class MyApp extends StatefulWidget {
+  final ThemeMode themeMode;
+
+  const MyApp({Key key, this.themeMode}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -48,8 +52,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Amplify Demo',
       theme: ThemeData(
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
+      ),
+      themeMode: widget.themeMode,
       initialRoute: '/',
       routes: {
         '/': (context) => SignInPage(),

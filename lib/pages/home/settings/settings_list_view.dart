@@ -1,7 +1,9 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/services/auth_service.dart';
+import 'package:social_media_app/services/shared_preferences_service.dart';
 import 'package:social_media_app/util/dialog/loading_dialog.dart';
+import 'package:social_media_app/util/dialog/ok_dialog.dart';
 
 class SettingsListView extends StatefulWidget {
   @override
@@ -12,7 +14,9 @@ class _SettingsListViewState extends State<SettingsListView> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(16.0),
       children: [
+        _buildThemeSwitch(),
         TextButton(
           child: Text('Change Password'),
           onPressed: () => Navigator.pushNamed(context, '/changePassword'),
@@ -25,6 +29,51 @@ class _SettingsListViewState extends State<SettingsListView> {
             ),
           ),
           onPressed: _signOut,
+        ),
+      ],
+    );
+  }
+
+  _buildThemeSwitch() {
+    Map<ThemeMode, String> themeModes = {
+      ThemeMode.dark: 'Dark',
+      ThemeMode.light: 'Light',
+      ThemeMode.system: 'System Default',
+    };
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('App Theme'),
+        FutureBuilder(
+          future: SharedPreferencesService.getThemeMode(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return DropdownButton(
+                value: snapshot.data,
+                items: themeModes.entries
+                    .map((entry) => DropdownMenuItem(
+                          value: entry.key,
+                          child: Text(entry.value),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  if (value != snapshot.data) {
+                    setState(() {
+                      SharedPreferencesService.setThemeMode(value);
+                    });
+                    OkDialog.show(
+                      context: context,
+                      title: 'App Theme',
+                      content:
+                          'The app theme will change when this app is being closed and reopened.',
+                    );
+                  }
+                },
+              );
+            } else {
+              return DropdownButton(items: []);
+            }
+          },
         ),
       ],
     );
