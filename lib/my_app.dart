@@ -13,16 +13,11 @@ import 'amplifyconfiguration.dart';
 import 'models/ModelProvider.dart';
 
 class MyApp extends StatefulWidget {
-  final String initialRoute;
-
-  MyApp({Key key, this.initialRoute}) : super(key: key);
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -54,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: widget.initialRoute,
+      initialRoute: '/',
       routes: {
         '/': (context) => SignInPage(),
         '/signup': (context) => SignUpPage(),

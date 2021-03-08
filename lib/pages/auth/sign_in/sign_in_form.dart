@@ -24,6 +24,14 @@ class _SignInFormState extends State<SignInForm> {
     super.initState();
     _usernameController = TextEditingController(text: widget.initialUsername);
     _passwordController = TextEditingController(text: widget.initialPassword);
+    _autoSignIn();
+  }
+
+  _autoSignIn() async {
+    final bool isSignedIn = await AuthService.isSignedIn();
+    if (isSignedIn) {
+      Navigator.pushNamed(context, '/home');
+    }
   }
 
   @override

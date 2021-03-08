@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
-        automaticallyImplyLeading: false,
       ),
       body: PageView(
         controller: _pageController,
@@ -49,6 +48,7 @@ class _HomePageState extends State<HomePage> {
         }),
         children: [
           Container(child: Center(child: Text('Feed'))),
+          Container(child: Center(child: Text('Chat'))),
           Container(child: Center(child: Text('Friends'))),
           Container(child: Center(child: Text('My Profile'))),
         ],
@@ -64,14 +64,22 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.rss_feed),
             label: 'Feed',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
             label: 'Friends',
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.portrait),
             label: 'My Profile',
+            backgroundColor: Theme.of(context).primaryColor,
           ),
         ],
       ),

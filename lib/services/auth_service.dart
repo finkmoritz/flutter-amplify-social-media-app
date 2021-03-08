@@ -3,6 +3,15 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 
 class AuthService {
+  static Future<bool> isSignedIn() async {
+    try {
+      var user = await Amplify.Auth.getCurrentUser();
+      return user != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<SignInResult> signIn({String username, String password}) async {
     await Amplify.Auth.signOut();
     var result =
@@ -15,8 +24,7 @@ class AuthService {
     return Amplify.Auth.signOut();
   }
 
-  static Future<SignUpResult> signUp(
-      {String email, String username, String password}) async {
+  static Future<SignUpResult> signUp({String email, String username, String password}) async {
     var result = await Amplify.Auth.signUp(
         username: username,
         password: password,
@@ -25,8 +33,7 @@ class AuthService {
     return result;
   }
 
-  static Future<SignUpResult> confirmSignUp(
-      {String username, String confirmationCode}) async {
+  static Future<SignUpResult> confirmSignUp({String username, String confirmationCode}) async {
     var result = await Amplify.Auth.confirmSignUp(
         username: username, confirmationCode: confirmationCode);
     Amplify.Analytics.recordEvent(event: AnalyticsEvent('confirmSignUp'));
