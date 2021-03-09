@@ -7,6 +7,7 @@ import 'package:social_media_app/pages/auth/password_management/password_change_
 import 'package:social_media_app/pages/auth/password_management/password_reset_page.dart';
 import 'package:social_media_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:social_media_app/pages/auth/sign_up/sign_up_page.dart';
+import 'package:social_media_app/pages/home/feed/new_post_page.dart';
 import 'package:social_media_app/pages/home/home_page.dart';
 import 'package:social_media_app/pages/home/settings/settings_page.dart';
 
@@ -68,6 +69,7 @@ class _MyAppState extends State<MyApp> {
         '/changePassword': (context) => PasswordChangePage(),
         '/home': (context) => HomePage(),
         '/settings': (context) => SettingsPage(),
+        '/feed/newPost': (context) => NewPostPage(),
       },
     );
   }

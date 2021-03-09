@@ -94,6 +94,23 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      floatingActionButton: _buildFloatingActionButton(),
     );
+  }
+
+  Widget _buildFloatingActionButton() {
+    switch (_currentIndex) {
+      case 0:
+        return FloatingActionButton(
+          child: Icon(
+            Icons.edit,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, '/feed/newPost');
+          },
+        );
+      default:
+        return Container();
+    }
   }
 }
