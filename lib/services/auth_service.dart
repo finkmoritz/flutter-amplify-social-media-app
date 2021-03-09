@@ -24,6 +24,7 @@ class AuthService {
   }
 
   static Future<SignOutResult> signOut() async {
+    await Amplify.DataStore.clear();
     return Amplify.Auth.signOut();
   }
 
@@ -39,7 +40,7 @@ class AuthService {
   static Future<SignUpResult> confirmSignUp({String username, String confirmationCode}) async {
     var result = await Amplify.Auth.confirmSignUp(
         username: username, confirmationCode: confirmationCode);
-    Amplify.DataStore.save(User(name: username));
+    Amplify.DataStore.save(User(name: username, description: 'This is me!'));
     AnalyticsService.recordEvent(event: AnalyticsEvent('confirmSignUp'));
     return result;
   }

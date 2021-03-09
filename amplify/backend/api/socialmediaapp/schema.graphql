@@ -1,6 +1,7 @@
 type User @model {
     id: ID!
     name: String!
+    description: String!
     posts: [Post] @connection(keyName: "byUser", fields: ["id"])
 }
 

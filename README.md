@@ -45,4 +45,4 @@ If everything is configured as desired, execute `amplify push` to create the res
 
 The GraphQL schema is defined in [schema.graphql](amplify/backend/api/socialmediaapp/schema.graphql). Whenever changes
 have been made to that schema, execute `amplify codegen models` in order to generate the respective dart classes within
-the [lib/models](lib/models) folder.
+the [lib/models](lib/models) folder. Fully restart the app so that all changes take effect.

@@ -27,6 +27,7 @@ class User extends Model {
   static const classType = const UserType();
   final String id;
   final String name;
+  final String description;
   final List<Post> posts;
 
   @override
@@ -37,12 +38,21 @@ class User extends Model {
     return id;
   }
 
-  const User._internal({@required this.id, @required this.name, this.posts});
+  const User._internal(
+      {@required this.id,
+      @required this.name,
+      @required this.description,
+      this.posts});
 
-  factory User({String id, @required String name, List<Post> posts}) {
+  factory User(
+      {String id,
+      @required String name,
+      @required String description,
+      List<Post> posts}) {
     return User._internal(
         id: id == null ? UUID.getUUID() : id,
         name: name,
+        description: description,
         posts: posts != null ? List.unmodifiable(posts) : posts);
   }
 
@@ -56,6 +66,7 @@ class User extends Model {
     return other is User &&
         id == other.id &&
         name == other.name &&
+        description == other.description &&
         DeepCollectionEquality().equals(posts, other.posts);
   }
 
@@ -68,20 +79,26 @@ class User extends Model {
 
     buffer.write("User {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("name=" + "$name");
+    buffer.write("name=" + "$name" + ", ");
+    buffer.write("description=" + "$description");
     buffer.write("}");
 
     return buffer.toString();
   }
 
-  User copyWith({String id, String name, List<Post> posts}) {
+  User copyWith(
+      {String id, String name, String description, List<Post> posts}) {
     return User(
-        id: id ?? this.id, name: name ?? this.name, posts: posts ?? this.posts);
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        posts: posts ?? this.posts);
   }
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
+        description = json['description'],
         posts = json['posts'] is List
             ? (json['posts'] as List)
                 .map((e) => Post.fromJson(new Map<String, dynamic>.from(e)))
@@ -91,11 +108,13 @@ class User extends Model {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
+        'description': description,
         'posts': posts?.map((e) => e?.toJson())?.toList()
       };
 
   static final QueryField ID = QueryField(fieldName: "user.id");
   static final QueryField NAME = QueryField(fieldName: "name");
+  static final QueryField DESCRIPTION = QueryField(fieldName: "description");
   static final QueryField POSTS = QueryField(
       fieldName: "posts",
       fieldType: ModelFieldType(ModelFieldTypeEnum.model,
@@ -109,6 +128,11 @@ class User extends Model {
 
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
         key: User.NAME,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+        key: User.DESCRIPTION,
         isRequired: true,
         ofType: ModelFieldType(ModelFieldTypeEnum.string)));
 

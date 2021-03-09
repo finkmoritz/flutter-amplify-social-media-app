@@ -49,8 +49,8 @@ class _HomePageState extends State<HomePage> {
         }),
         children: [
           Container(child: Center(child: Text('Feed'))),
+          Container(child: Center(child: Text('Search'))),
           Container(child: Center(child: Text('Chat'))),
-          Container(child: Center(child: Text('Friends'))),
           Container(child: MyProfilePage()),
         ],
       ),
@@ -68,13 +68,13 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
+            icon: Icon(Icons.search),
+            label: 'Search',
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Friends',
+            icon: Icon(Icons.chat),
+            label: 'Chat',
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
