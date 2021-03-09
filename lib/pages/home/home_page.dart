@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/pages/home/chat/chat_page.dart';
+import 'package:social_media_app/pages/home/feed/feed_page.dart';
 import 'package:social_media_app/pages/home/my_profile/my_profile_page.dart';
+import 'package:social_media_app/pages/home/notifications/notifications_page.dart';
+import 'package:social_media_app/pages/home/search/search_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,10 +52,11 @@ class _HomePageState extends State<HomePage> {
           _currentIndex = index;
         }),
         children: [
-          Container(child: Center(child: Text('Feed'))),
-          Container(child: Center(child: Text('Search'))),
-          Container(child: Center(child: Text('Chat'))),
-          Container(child: MyProfilePage()),
+          FeedPage(),
+          NotificationsPage(),
+          SearchPage(),
+          ChatPage(),
+          MyProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -65,6 +70,11 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.rss_feed),
             label: 'Feed',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
