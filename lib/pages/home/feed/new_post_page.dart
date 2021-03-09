@@ -24,7 +24,8 @@ class _NewPostPageState extends State<NewPostPage> {
             child: FutureBuilder(
               future: UserService.getMyUser(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
                   _postCard = PostCard(
                     post: Post(
                       user: snapshot.data,

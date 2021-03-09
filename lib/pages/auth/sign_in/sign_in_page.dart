@@ -16,7 +16,8 @@ class SignInPage extends StatelessWidget {
           SharedPreferencesService.getPassword(),
         ]),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
             return _buildContent(
               username: snapshot.data[0],
               password: snapshot.data[1],

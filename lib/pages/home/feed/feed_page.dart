@@ -11,10 +11,14 @@ class FeedPage extends StatelessWidget {
         child: FutureBuilder(
           future: PostService.getAll(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
               return FeedList(
                 posts: snapshot.data,
               );
+            } else if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasError) {
+              return Text(snapshot.error.toString());
             }
             return Container();
           },

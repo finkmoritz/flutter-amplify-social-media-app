@@ -48,7 +48,8 @@ class _SettingsListViewState extends State<SettingsListView> {
         FutureBuilder(
           future: SharedPreferencesService.getThemeMode(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
               return DropdownButton(
                 value: snapshot.data,
                 items: themeModes.entries

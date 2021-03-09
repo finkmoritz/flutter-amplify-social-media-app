@@ -37,9 +37,9 @@ class Comment extends Model {
   }
 
   const Comment._internal(
-      {@required this.id, this.post, @required this.content});
+      {@required this.id, @required this.post, @required this.content});
 
-  factory Comment({String id, Post post, @required String content}) {
+  factory Comment({String id, @required Post post, @required String content}) {
     return Comment._internal(
         id: id == null ? UUID.getUUID() : id, post: post, content: content);
   }
@@ -105,7 +105,7 @@ class Comment extends Model {
 
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
         key: Comment.POST,
-        isRequired: false,
+        isRequired: true,
         targetName: "postID",
         ofModelName: (Post).toString()));
 

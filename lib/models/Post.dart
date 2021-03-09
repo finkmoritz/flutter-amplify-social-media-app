@@ -39,10 +39,16 @@ class Post extends Model {
   }
 
   const Post._internal(
-      {@required this.id, @required this.text, this.user, this.comments});
+      {@required this.id,
+      @required this.text,
+      @required this.user,
+      this.comments});
 
   factory Post(
-      {String id, @required String text, User user, List<Comment> comments}) {
+      {String id,
+      @required String text,
+      @required User user,
+      List<Comment> comments}) {
     return Post._internal(
         id: id == null ? UUID.getUUID() : id,
         text: text,
@@ -131,7 +137,7 @@ class Post extends Model {
 
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
         key: Post.USER,
-        isRequired: false,
+        isRequired: true,
         targetName: "userID",
         ofModelName: (User).toString()));
 

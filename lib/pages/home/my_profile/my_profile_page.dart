@@ -19,7 +19,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
     return FutureBuilder(
       future: UserService.getMyUser(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
           return UserCard(user: snapshot.data);
         }
         return Container();

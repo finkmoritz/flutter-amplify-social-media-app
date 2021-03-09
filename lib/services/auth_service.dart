@@ -21,6 +21,8 @@ class AuthService {
     var result =
         await Amplify.Auth.signIn(username: username, password: password);
     AnalyticsService.recordEvent(event: AnalyticsEvent('signIn'));
+    User newUser = User(name: username, description: 'This is me!');
+    await UserService.save(newUser); //TODO remove after test
     return result;
   }
 
