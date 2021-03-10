@@ -22,14 +22,14 @@ The app's features include:
 
 In order to use the AWS Amplify service, you need an [AWS account](https://aws.amazon.com/de/console/).
 
-### Project Setup
-
 Install following tools:
 
 - [Flutter](https://flutter.dev/)
 - [Amplify](https://docs.amplify.aws/lib/project-setup/prereq/q/platform/flutter)
 
-Next, configure Amplify with following commands:
+### Project Setup
+
+Configure your Amplify resources with following commands:
 
 `amplify init`
 
@@ -41,7 +41,15 @@ Next, configure Amplify with following commands:
 
 If everything is configured as desired, execute `amplify push` to create the respective resources in AWS.
 
-### GraphQL
+Before running this project the first time, make sure to call `flutter create .`.
+
+### Run Project
+
+`flutter run`
+
+## How to modify the app
+
+### Datamodel / GraphQL
 
 The GraphQL schema is defined in [schema.graphql](amplify/backend/api/socialmediaapp/schema.graphql). Whenever changes
 have been made to that schema, execute `amplify codegen models` in order to generate the respective dart classes within
