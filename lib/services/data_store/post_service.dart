@@ -9,7 +9,13 @@ class PostService {
   }
 
   static Future<List<Post>> getAll() async {
-    User user = await UserService.getMyUser();
-    return Amplify.DataStore.query(Post.classType, where: User.ID.eq(user.id));
+    User myUser = await UserService.getMyUser();
+    List<Post> posts = await Amplify.DataStore.query(Post.classType, where: User.ID.eq(myUser.id));
+    List<Post> postsWithUsers = [];
+    posts.forEach((post) async {
+      List<User> users = await Amplify.DataStore.query(User.classType, where: User.ID.eq(post.user.id));
+      postsWithUsers.add(post.copyWith(user: users[0]));
+    });
+    return postsWithUsers;
   }
 }
