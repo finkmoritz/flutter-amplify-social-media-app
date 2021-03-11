@@ -13,13 +13,11 @@
 * permissions and limitations under the License.
 */
 
-import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
-import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
-
 // ignore_for_file: public_member_api_docs
 
 import 'ModelProvider.dart';
+import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
+import 'package:flutter/foundation.dart';
 
 /** This is an auto generated class representing the Post type in your schema. */
 @immutable
@@ -28,7 +26,6 @@ class Post extends Model {
   final String id;
   final String text;
   final User user;
-  final List<Comment> comments;
 
   @override
   getInstanceType() => classType;
@@ -39,21 +36,11 @@ class Post extends Model {
   }
 
   const Post._internal(
-      {@required this.id,
-      @required this.text,
-      @required this.user,
-      this.comments});
+      {@required this.id, @required this.text, @required this.user});
 
-  factory Post(
-      {String id,
-      @required String text,
-      @required User user,
-      List<Comment> comments}) {
+  factory Post({String id, @required String text, @required User user}) {
     return Post._internal(
-        id: id == null ? UUID.getUUID() : id,
-        text: text,
-        user: user,
-        comments: comments != null ? List.unmodifiable(comments) : comments);
+        id: id == null ? UUID.getUUID() : id, text: text, user: user);
   }
 
   bool equals(Object other) {
@@ -66,8 +53,7 @@ class Post extends Model {
     return other is Post &&
         id == other.id &&
         text == other.text &&
-        user == other.user &&
-        DeepCollectionEquality().equals(comments, other.comments);
+        user == other.user;
   }
 
   @override
@@ -86,12 +72,9 @@ class Post extends Model {
     return buffer.toString();
   }
 
-  Post copyWith({String id, String text, User user, List<Comment> comments}) {
+  Post copyWith({String id, String text, User user}) {
     return Post(
-        id: id ?? this.id,
-        text: text ?? this.text,
-        user: user ?? this.user,
-        comments: comments ?? this.comments);
+        id: id ?? this.id, text: text ?? this.text, user: user ?? this.user);
   }
 
   Post.fromJson(Map<String, dynamic> json)
@@ -99,19 +82,10 @@ class Post extends Model {
         text = json['text'],
         user = json['user'] != null
             ? User.fromJson(new Map<String, dynamic>.from(json['user']))
-            : null,
-        comments = json['comments'] is List
-            ? (json['comments'] as List)
-                .map((e) => Comment.fromJson(new Map<String, dynamic>.from(e)))
-                .toList()
             : null;
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'text': text,
-        'user': user?.toJson(),
-        'comments': comments?.map((e) => e?.toJson())?.toList()
-      };
+  Map<String, dynamic> toJson() =>
+      {'id': id, 'text': text, 'user': user?.toJson()};
 
   static final QueryField ID = QueryField(fieldName: "post.id");
   static final QueryField TEXT = QueryField(fieldName: "text");
@@ -119,10 +93,6 @@ class Post extends Model {
       fieldName: "user",
       fieldType: ModelFieldType(ModelFieldTypeEnum.model,
           ofModelName: (User).toString()));
-  static final QueryField COMMENTS = QueryField(
-      fieldName: "comments",
-      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
-          ofModelName: (Comment).toString()));
   static var schema =
       Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Post";
@@ -138,14 +108,8 @@ class Post extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
         key: Post.USER,
         isRequired: true,
-        targetName: "userID",
+        targetName: "postUserId",
         ofModelName: (User).toString()));
-
-    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-        key: Post.COMMENTS,
-        isRequired: false,
-        ofModelName: (Comment).toString(),
-        associatedKey: Comment.POST));
   });
 }
 

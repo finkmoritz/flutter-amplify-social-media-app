@@ -2,20 +2,11 @@ type User @model {
     id: ID!
     name: String!
     description: String!
-    posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+    posts: [Post] @connection(name: "userPosts")
 }
 
-type Post @model @key(name: "byUser", fields: ["userID"]) {
+type Post @model {
     id: ID!
     text: String!
-    userID: ID!
-    user: User! @connection(fields: ["userID"])
-    comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
-}
-
-type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
-    id: ID!
-    postID: ID!
-    post: Post! @connection(fields: ["postID"])
-    content: String!
+    user: User! @connection(name: "userPosts")
 }
