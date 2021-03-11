@@ -14,10 +14,22 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   PageController _pageController;
 
+  FeedPage _feedPage;
+  NotificationsPage _notificationsPage;
+  SearchPage _searchPage;
+  ChatPage _chatPage;
+  MyProfilePage _myProfilePage;
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+
+    _feedPage = FeedPage();
+    _notificationsPage = NotificationsPage();
+    _searchPage = SearchPage();
+    _chatPage = ChatPage();
+    _myProfilePage = MyProfilePage();
   }
 
   @override
@@ -52,11 +64,11 @@ class _HomePageState extends State<HomePage> {
           _currentIndex = index;
         }),
         children: [
-          FeedPage(),
-          NotificationsPage(),
-          SearchPage(),
-          ChatPage(),
-          MyProfilePage(),
+          _feedPage,
+          _notificationsPage,
+          _searchPage,
+          _chatPage,
+          _myProfilePage,
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
