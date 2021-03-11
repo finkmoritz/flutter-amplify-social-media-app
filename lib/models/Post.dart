@@ -26,6 +26,7 @@ class Post extends Model {
   final String id;
   final String text;
   final User user;
+  final TemporalDateTime dateTime;
 
   @override
   getInstanceType() => classType;
@@ -36,11 +37,21 @@ class Post extends Model {
   }
 
   const Post._internal(
-      {@required this.id, @required this.text, @required this.user});
+      {@required this.id,
+      @required this.text,
+      @required this.user,
+      @required this.dateTime});
 
-  factory Post({String id, @required String text, @required User user}) {
+  factory Post(
+      {String id,
+      @required String text,
+      @required User user,
+      @required TemporalDateTime dateTime}) {
     return Post._internal(
-        id: id == null ? UUID.getUUID() : id, text: text, user: user);
+        id: id == null ? UUID.getUUID() : id,
+        text: text,
+        user: user,
+        dateTime: dateTime);
   }
 
   bool equals(Object other) {
@@ -53,7 +64,8 @@ class Post extends Model {
     return other is Post &&
         id == other.id &&
         text == other.text &&
-        user == other.user;
+        user == other.user &&
+        dateTime == other.dateTime;
   }
 
   @override
@@ -66,15 +78,20 @@ class Post extends Model {
     buffer.write("Post {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("text=" + "$text" + ", ");
-    buffer.write("user=" + (user != null ? user.toString() : "null"));
+    buffer.write("user=" + (user != null ? user.toString() : "null") + ", ");
+    buffer.write("dateTime=" + (dateTime != null ? dateTime.format() : "null"));
     buffer.write("}");
 
     return buffer.toString();
   }
 
-  Post copyWith({String id, String text, User user}) {
+  Post copyWith(
+      {String id, String text, User user, TemporalDateTime dateTime}) {
     return Post(
-        id: id ?? this.id, text: text ?? this.text, user: user ?? this.user);
+        id: id ?? this.id,
+        text: text ?? this.text,
+        user: user ?? this.user,
+        dateTime: dateTime ?? this.dateTime);
   }
 
   Post.fromJson(Map<String, dynamic> json)
@@ -82,10 +99,17 @@ class Post extends Model {
         text = json['text'],
         user = json['user'] != null
             ? User.fromJson(new Map<String, dynamic>.from(json['user']))
+            : null,
+        dateTime = json['dateTime'] != null
+            ? TemporalDateTime.fromString(json['dateTime'])
             : null;
 
-  Map<String, dynamic> toJson() =>
-      {'id': id, 'text': text, 'user': user?.toJson()};
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'text': text,
+        'user': user?.toJson(),
+        'dateTime': dateTime?.format()
+      };
 
   static final QueryField ID = QueryField(fieldName: "post.id");
   static final QueryField TEXT = QueryField(fieldName: "text");
@@ -93,6 +117,7 @@ class Post extends Model {
       fieldName: "user",
       fieldType: ModelFieldType(ModelFieldTypeEnum.model,
           ofModelName: (User).toString()));
+  static final QueryField DATETIME = QueryField(fieldName: "dateTime");
   static var schema =
       Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Post";
@@ -110,6 +135,11 @@ class Post extends Model {
         isRequired: true,
         targetName: "postUserId",
         ofModelName: (User).toString()));
+
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+        key: Post.DATETIME,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
   });
 }
 

@@ -1,3 +1,4 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/card/post_card.dart';
 import 'package:social_media_app/models/Post.dart';
@@ -30,6 +31,7 @@ class _NewPostPageState extends State<NewPostPage> {
                     post: Post(
                       user: snapshot.data,
                       text: 'New Post',
+                      dateTime: TemporalDateTime.now(),
                     ),
                     editable: true,
                   );

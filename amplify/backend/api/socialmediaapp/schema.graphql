@@ -9,4 +9,5 @@ type Post @model {
     id: ID!
     text: String!
     user: User! @connection(name: "userPosts")
+    dateTime: AWSDateTime!
 }

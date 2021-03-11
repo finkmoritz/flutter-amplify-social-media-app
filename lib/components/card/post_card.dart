@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:social_media_app/components/form/my_text_form_field.dart';
 import 'package:social_media_app/models/Post.dart';
 
@@ -39,16 +40,29 @@ class _PostCardState extends State<PostCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              widget.post.user.name ?? 'Unknown User',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 16.0,
+                  backgroundImage: AssetImage('assets/icon.png'),
+                ),
+                Text(' \u00B7 '),
+                Expanded(
+                  child: Text(
+                    widget.post.user.name ?? 'Unknown User',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  DateFormat('MM-dd HH:mm').format(widget.post.dateTime.getDateTimeInUtc().toLocal()),
+                  style: TextStyle(color: Colors.grey,),
+                ),
+              ],
             ),
             widget.editable
-                ? MyTextFormField(
-                    controller: _controller,
-                  )
+                ? MyTextFormField(controller: _controller)
                 : Text(widget.post.text),
           ],
         ),
