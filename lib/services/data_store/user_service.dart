@@ -13,4 +13,8 @@ class UserService {
         where: User.NAME.eq(authUser.username));
     return users[0];
   }
+
+  static Future<List<User>> searchUser(String query) {
+    return Amplify.DataStore.query(User.classType, where: User.NAME.contains(query));
+  }
 }
